@@ -66,7 +66,7 @@ async def run_modules(
                 )
             except KeyError:
                 log.error(__name__, f"Опрашивающий процесс {polling_process_class.__name__} используется "
-                                    f"модулен {module.name}, но не зарегистрирован или отключён")
+                                    f"модулем {module.name}, но не зарегистрирован или отключён")
                 continue
         elif issubclass(module_class, module_classes.EventModule):
             module_object = module_class(api_client, community, module.config, connection, *dependencies)
