@@ -1,0 +1,3 @@
+from .polling_process import PollingProcess
+from .new_members_process import NewMembersProcess
+from .new_publications_process import NewPublicationsProcess

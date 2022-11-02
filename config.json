@@ -1,0 +1,119 @@
+{
+  "loggingLevel": "debug-info",
+  "generalConfig": {
+    "communities": [communities ndc ids]
+  },
+  "apiClientConfig": {
+    "baseApiUrl": "http://service.aminoapps.com/api/v1",
+    "connectTimeout": 60,
+    "readTimeout": 60,
+    "proxyEnabled": false,
+    "proxyConfig": {
+      "proxies": [
+        {
+          "scheme": "http",
+          "host": "127.0.0.1",
+          "port": 1,
+          "auth": {
+            "username": "proxy auth username (optional)",
+            "password": "proxy auth password (optional)"
+          }
+        }
+      ]
+    }
+  },
+  "webSocketConfig": {
+    "server": "aminoapps.com",
+    "pingInterval": 5
+  },
+  "pollingProcesses": [
+    {
+      "name": "NewMembersProcess",
+      "enabled": true,
+      "interval": 3
+    },
+    {
+      "name": "NewPublicationsProcess",
+      "enabled": true,
+      "interval": 3
+    }
+  ],
+  "modules": [
+    {
+      "name": "AntiBotnet",
+      "enabled": true,
+      "config": {
+        "maxAllowedCountDifference": 30,
+        "minAllowedJoinTimeDifference": 1
+      }
+    },
+    {
+      "name": "AntiFlood",
+      "enabled": true,
+      "config": {
+        "interval": 1,
+        "maxAllowedMessageCount": 1,
+        "deleteWhen": 2,
+        "kickWhen": 3,
+        "banWhen": 4,
+        "kickAllowRejoin": true
+      }
+    },
+    {
+      "name": "AntiSystemMessage",
+      "enabled": true,
+      "config": {}
+    },
+    {
+      "name": "FeedAntiFlood",
+      "enabled": true,
+      "config": {
+        "maxAllowedPublicationCount": 1,
+        "hideWhen": 2,
+        "banWhen": 3,
+        "hidePublishedByBannedUsers": true
+      }
+    },
+    {
+      "name": "CommonCommandsModule",
+      "enabled": true,
+      "dependencies": ["AntiBotnet"],
+      "config": {
+        "prefix": "/"
+      }
+    },
+    {
+      "name": "AntiAdvertising",
+      "enabled": true,
+      "config": {
+        "disallowedDomains": ["t.me", "aminoapps.com"],
+        "reaction": "delete",
+        "updateOnlineStatusInterval": 15
+      }
+    },
+    {
+      "name": "ChatJoinLeaveHandler",
+      "enabled": true,
+      "config": {
+        "onJoinMessage": "Привет, %nickname%! Прочитай правила чата и не пытайся уговорить нас отключить рекламу.",
+        "onLeaveMessage": "Пока, %nickname%!",
+        "cooldownTime": 3
+      }
+    },
+    {
+      "name": "WelcomeMessageWriter",
+      "enabled": true,
+      "config": {
+        "sendMethod": "comment",
+        "text": "Привет, %nickname%! Добро пожаловать в наше сообщество."
+      }
+    }
+  ],
+  "accounts": [
+    {
+      "email": "your email",
+      "password": "your password",
+      "deviceId": "your device id"
+    }
+  ]
+}
