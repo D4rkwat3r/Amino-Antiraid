@@ -95,7 +95,7 @@
       "name": "ChatJoinLeaveHandler",
       "enabled": true,
       "config": {
-        "onJoinMessage": "Привет, %nickname%! Перед общением в чате, пожалуйста, прочитай правила..",
+        "onJoinMessage": "Привет, %nickname%! Перед общением в чате, пожалуйста, прочитай правила.",
         "onLeaveMessage": "Пока, %nickname%!",
         "cooldownTime": 3
       }
