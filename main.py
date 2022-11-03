@@ -115,7 +115,7 @@ async def main():
                 for community in config.general_config.communities
             ]
         )
-        communities = tuple(filter(lambda x: x, communities))
+        communities = tuple(filter(lambda x: bool(x), communities))
         communities = tuple(map(lambda x: Community.from_dict(x.data["community"]), communities))
         log.info(__name__, f"Получили информацию о "
                            f"{len(communities)} сообществах "
