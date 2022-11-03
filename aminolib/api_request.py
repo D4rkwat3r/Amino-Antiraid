@@ -137,5 +137,5 @@ class ApiRequest:
         )
         log.debug("API", f"Отправлен запрос к API: [{self}], статус: {'УСПЕХ' if response.status == 200 else 'НЕУДАЧА'}")
         try: response_json = loads(await response.text())
-        except JSONDecodeError: return ResponseWrapper(False, {})
+        except JSONDecodeError: return ResponseWrapper({})
         return ResponseWrapper(response_json)
