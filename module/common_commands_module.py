@@ -34,7 +34,7 @@ class CommonCommandsModule(CommandsModule):
             .global_scope() \
             .param("q", link) \
             .send()
-        if not link_info_response.is_succeed:
+        if not link_info_response:
             await self.api_client.send_message(
                 self.community.ndc_id, thread_id, "Не удалось получить информацию о ссылке"
             )
