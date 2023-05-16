@@ -26,8 +26,8 @@ class EntertainmentCommandsModule(CommandsModule):
         self.ai_enabled = cfg["openAIEnabled"]
         self.handle("анекдот", 0, self.cmd_handle_anecdote)
         self.handle("гс", 1, self.cmd_handle_speech)
-        self.handle("распознать", 0, self.cmd_handle_recognize)
         self.handle("число", 2, self.cmd_handle_number)
+        self.handle("картинка", 1, self.cmd_handle_image)
         self.handle("помощь", 0, self.cmd_handle_help)
         if self.ai_enabled:
             self.token = cfg["openAIConfig"]["token"]
@@ -35,7 +35,7 @@ class EntertainmentCommandsModule(CommandsModule):
             if self.hint.startswith(".file"):
                 with open(self.hint.split(".file")[1].strip(), "r", encoding="utf-8") as file:
                     self.hint = file.read()
-            self.handle("картинка", 1, self.cmd_handle_image)
+            self.handle("распознать", 0, self.cmd_handle_recognize)
             self.handle("бот", 1, self.cmd_handle_talk)
 
     async def send_oai_request(self, path: str, data: Union[dict, FormData]) -> Optional[dict]:
@@ -166,7 +166,7 @@ class EntertainmentCommandsModule(CommandsModule):
         need_translate = prompt[0] != "-"
         translated_prompt = (await get_running_loop().run_in_executor(
             None,
-            lambda: self.translator.translate(actual_prompt, src="ru", dest="en")
+            lambda: self.translator.translate(actual_prompt, dest="en")
         )).text if need_translate else "ОТСУТСТВУЕТ"
         await self.api_client.send_message(
             self.community.ndc_id,
@@ -212,10 +212,10 @@ class EntertainmentCommandsModule(CommandsModule):
         help_text = f"[BC]- - - РАЗВЛЕКАТЕЛЬНЫЕ КОМАНДЫ - - -\n\n" \
                     f"{self.prefix}анекдот - случайный анекдот с сайта anekdoty.ru\n" \
                     f"{self.prefix}гс - преобразовать текст в голосовое сообщение\n" \
-                    f"{self.prefix}распознать - распознать текст голосового сообщения\n" \
-                    f"{self.prefix}число [от] [до] - создать случайное число в указанном диапазоне\n"
+                    f"{self.prefix}число [от] [до] - создать случайное число в указанном диапазоне\n" \
+                    f"{self.prefix}картинка [-, если не требуется перевод] [текст] - создать картинку по запросу\n"
         if self.ai_enabled:
-            help_text += f"{self.prefix}картинка [-, если не требуется перевод] [текст] - создать картинку по запросу\n"
+            help_text += f"{self.prefix}распознать - распознать текст голосового сообщения\n"
             help_text += f"{self.prefix}бот [текст] - задать боту вопрос\n"
         help_text += f"{self.prefix}помощь - вывести список команд"
         await self.api_client.send_message(
