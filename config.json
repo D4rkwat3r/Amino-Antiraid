@@ -1,0 +1,140 @@
+{
+  "loggingLevel": "debug-info",
+  "generalConfig": {
+    "communities": [INSERT_COMMUNITY_IDS]
+  },
+  "apiClientConfig": {
+    "baseApiUrl": "http://service.aminoapps.com/api/v1",
+    "connectTimeout": 60,
+    "readTimeout": 60,
+    "proxyEnabled": false,
+    "proxyConfig": {
+      "proxies": [
+        {
+          "scheme": "http",
+          "host": "127.0.0.1",
+          "port": 1000,
+          "auth": {
+            "username": "username",
+            "password": "password"
+          }
+        }
+      ]
+    }
+  },
+  "webSocketConfig": {
+    "server": "aminoapps.com",
+    "pingInterval": 5
+  },
+  "pollingProcesses": [
+    {
+      "name": "NewMembersProcess",
+      "enabled": true,
+      "interval": 5
+    },
+    {
+      "name": "NewPublicationsProcess",
+      "enabled": true,
+      "interval": 5
+    }
+  ],
+  "modules": [
+    {
+      "name": "AntiBotnet",
+      "enabledGlobally": true,
+      "config": {
+        "maxAllowedCountDifference": 30,
+        "minAllowedJoinTimeDifference": 1
+      }
+    },
+    {
+      "name": "AntiFlood",
+      "enabledGlobally": true,
+      "config": {
+        "interval": 1,
+        "maxAllowedMessageCount": 2,
+        "deleteWhen": 3,
+        "kickWhen": 4,
+        "banWhen": 5,
+        "kickAllowRejoin": true
+      }
+    },
+    {
+      "name": "AntiSystemMessage",
+      "enabledGlobally": true,
+      "config": {}
+    },
+    {
+      "name": "FeedAntiFlood",
+      "enabledGlobally": true,
+      "config": {
+        "maxAllowedPublicationCount": 1,
+        "hideWhen": 2,
+        "banWhen": 3,
+        "hidePublishedByBannedUsers": true
+      }
+    },
+    {
+      "name": "ServiceCommandsModule",
+      "enabledGlobally": true,
+      "dependencies": ["AntiBotnet"],
+      "config": {
+        "prefix": "/"
+      }
+    },
+    {
+      "name": "AntiAdvertising",
+      "enabledGlobally": true,
+      "config": {
+        "disallowedDomains": ["t.me", "aminoapps.com"],
+        "reaction": "delete",
+        "ignoreStaff": true,
+        "updateOnlineStatusInterval": 15
+      }
+    },
+    {
+      "name": "ChatJoinLeaveHandler",
+      "enabledGlobally": true,
+      "config": {
+        "onJoinMessage": "Привет, %author.nickname%! Ты зашёл в чат \"%chat.title%\", не забудь прочитать правила.",
+        "onLeaveMessage": "Пока, %author.nickname%.",
+        "cooldownTime": 3
+      }
+    },
+    {
+      "name": "WelcomeMessageWriter",
+      "enabledGlobally": false,
+      "config": {
+        "sendMethod": "comment",
+        "text": "Привет, %nickname%! Добро пожаловать в наше сообщество."
+      }
+    },
+    {
+      "name": "EntertainmentCommandsModule",
+      "enabledGlobally": true,
+      "config": {
+        "prefix": "!",
+        "openAIEnabled": false,
+        "openAIConfig": {
+          "token": "openai_token",
+          "replyHint": ".file hint.txt"
+        }
+      }
+    },
+    {
+      "name": "ChatLoggerModule",
+      "enabledGlobally": true,
+      "config": {
+        "format": "%author.nickname%: %content%",
+        "useApiRequestToGetChatInfo": false
+      }
+    }
+  ],
+  "accounts": [
+    {
+      "email": "email",
+      "password": "password",
+      "deviceId": "account device id"
+    }
+  ]
+}

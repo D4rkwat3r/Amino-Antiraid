@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package protopy;
+
+message Checkin {
+  string type = 12;
+}
+
+message CheckinRequest {
+  Checkin checkin = 4;
+  int32 version = 14;
+}
+
+message CheckinResponse {
+  fixed64 android_id = 7;
+  fixed64 security_token = 8;
+}
