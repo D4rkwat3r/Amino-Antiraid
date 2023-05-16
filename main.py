@@ -127,7 +127,6 @@ async def main():
                 .param("email", account.email) \
                 .param("secret", f"0 {account.password}") \
                 .param("clientType", 300) \
-                .param("deviceID", account.deviceId) \
                 .send()
             if not login_response:
                 log.fatal(__name__, f"Не удалось войти в аккаунт {account.email}")

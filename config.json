@@ -133,8 +133,7 @@
   "accounts": [
     {
       "email": "email",
-      "password": "password",
-      "deviceId": "account device id"
+      "password": "password"
     }
   ]
 }

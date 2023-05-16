@@ -75,7 +75,6 @@ class Config:
     class Account:
         email: str
         password: str
-        deviceId: str
 
     logging_level: str
     general_config: GeneralConfig
