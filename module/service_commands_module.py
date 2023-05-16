@@ -14,9 +14,6 @@ from .anti_botnet import AntiBotnet
 from .commands_module import CommandsModule
 from .commands_module import with_role_filter
 
-from asyncio import sleep
-from datetime import datetime
-
 
 class ServiceCommandsModule(CommandsModule):
     def __init__(
