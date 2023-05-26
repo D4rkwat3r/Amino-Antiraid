@@ -90,7 +90,7 @@ class EntertainmentCommandsModule(CommandsModule):
     async def cmd_handle_anecdote(self, message: dict):
         page = await self.client_session.get("https://anekdoty.ru")
         soup = BeautifulSoup(await page.text(), "lxml")
-        text = choice(soup.find_all("div", attrs={"class": "holder-body"})).find("p").texz
+        text = choice(soup.find_all("div", attrs={"class": "holder-body"})).find("p").text
         await self.api_client.send_message(self.community.ndc_id, message["threadId"], text)
 
     async def cmd_handle_speech(self, message: dict, *text):
